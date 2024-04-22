@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('image/slideimgs/img5.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #placesContainer {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #placesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #placesList li {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Check the Tour</h1>
+        <h1>Mata Vaishno Devi Tour, Katra</h1>
+        <form id="tourForm">
+            <label for="days">Number of Days:</label>
+            <select id="days" name="days">
+                <option value="3">3 Days</option>
+                <option value="4">4 Days</option>
+                <option value="5">5 Days</option>
+                <option value="6">6 Days</option>
+            </select>
+            <input type="submit" value="Check">
+        </form>
+
+        <div id="placesContainer" style="display: none;">
+            <h2>Places to Visit</h2>
+            <ul id="placesList"></ul>
+            <div id="totalAmount"></div>
+            <p id="note"></p>
+            <a href="payment.php" class="btn" onclick="populatePackages('Mata Vaishno Devi, Katra')">Book
+                now</a><br><br><br>
+        </div>
+    </div>
+
+    <script>
+        // Function to populate the Packages field with the selected place name or empty string
+        function populatePackages(placeName = '') {
+            // Get the input field for packages
+            var packagesInput = document.querySelector('input[name="packages"]');
+    
+            // Set the value of the packages input field to the selected place name or empty string
+            packagesInput.value = placeName;
+        }
+    
+        document.getElementById('tourForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var days = parseInt(document.getElementById('days').value);
+            var places = [];
+    
+            // Populate places based on the selected number of days
+            switch (days) {
+                case 3:
+                    places.push("Day 1: Visit Mata Vaishno Devi Temple");
+                    places.push("Day 2: Explore Bhairon Temple");
+                    places.push("Day 3: Trek to Ardh Kuari Cave");
+                    break;
+                case 4:
+                    places.push("Day 1: Visit Mata Vaishno Devi Temple");
+                    places.push("Day 2: Explore Bhairon Temple");
+                    places.push("Day 3: Trek to Ardh Kuari Cave");
+                    places.push("Day 4: Visit Sanjichhat and enjoy the view");
+                    break;
+                case 5:
+                    places.push("Day 1: Visit Mata Vaishno Devi Temple");
+                    places.push("Day 2: Explore Bhairon Temple");
+                    places.push("Day 3: Trek to Ardh Kuari Cave");
+                    places.push("Day 4: Visit Sanjichhat and enjoy the view");
+                    places.push("Day 5: Visit Banganga and experience the holy water");
+                    break;
+                case 6:
+                    places.push("Day 1: Visit Mata Vaishno Devi Temple");
+                    places.push("Day 2: Explore Bhairon Temple");
+                    places.push("Day 3: Trek to Ardh Kuari Cave");
+                    places.push("Day 4: Visit Sanjichhat and enjoy the view");
+                    places.push("Day 5: Visit Banganga and experience the holy water");
+                    places.push("Day 6: Discover the local markets in Katra");
+                    break;
+            }
+    
+            var amount = calculateAmount(days);
+            displayPlaces(places, amount);
+        });
+    
+        function calculateAmount(days) {
+            // Assuming a base price per day
+            var basePrice = 2000; // You can adjust this as needed
+            return basePrice * days;
+        }
+    
+        function displayPlaces(places, amount) {
+            var placesList = document.getElementById('placesList');
+            placesList.innerHTML = '';
+            places.forEach(function (place) {
+                var li = document.createElement('li');
+                li.textContent = place;
+                placesList.appendChild(li);
+            });
+    
+            var totalAmount = document.getElementById('totalAmount');
+            totalAmount.textContent = "Total Amount: Rs " + amount;
+            document.getElementById('placesContainer').style.display = 'block';
+    
+            var note = document.getElementById('note');
+            note.textContent = "Note: This package includes accommodation, meals, and transport.";
+        }
+    </script>
+    
+
+</body>
+
+</html>

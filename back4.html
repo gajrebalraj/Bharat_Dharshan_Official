@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Details</title>
+    <style>
+   body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-image: url('image/slideimgs/im4.jpg'); Add your background image URL here */
+    background-size: cover; /* Adjust the background image to cover the entire viewport */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; /* Center the background image */
+}
+
+
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #placesContainer {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #placesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #placesList li {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        a{
+            font-size: 30px;
+            color: rgb(232, 174, 14);
+        }   </style>
+</head>
+
+<body>
+    <h1>Check the Tour</h1>
+    <h1>Shimla Tour</h1>
+    <form id="tourForm">
+        <label for="days">Number of Days:</label>
+        <select id="days" name="days">
+            <option value="1">1 Day</option>
+            <option value="2">2 Days</option>
+            <option value="3">3 Days</option>
+            <option value="4">4 Days</option>
+            <option value="5">5 Days</option>
+            <option value="6">6 Days</option>
+        </select>
+        <input type="submit" value="Check">
+    </form>
+
+    <div id="placesContainer" style="display: none;">
+        <h2>Places to Visit</h2>
+        <ul id="placesList"></ul>
+        <div id="totalAmount"></div>
+        <p id="note"></p>
+        <a id="exploreLink" href="payment.php" class="btn" onclick="populatePackages()"> <strong>Book Now</strong></a><br><br><br>
+    </div>
+
+    <script>
+        function populatePackages() {
+            var placeName = document.querySelector('#placesList li').textContent;
+            var packagesInput = document.querySelector('input[name="packages"]');
+            packagesInput.value = placeName;
+
+            var exploreLink = document.getElementById('exploreLink');
+            var href = 'index.php#contact';
+            if (placeName) {
+                href += '?place=' + encodeURIComponent(placeName);
+            }
+            exploreLink.href = href;
+        }
+
+        document.getElementById('tourForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var days = parseInt(document.getElementById('days').value);
+            var places = [];
+
+            // Populate places based on the selected number of days
+            if (days >= 1 && days <= 6) {
+                switch (days) {
+                    case 1:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge"];
+                        break;
+                    case 2:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge", "Day 2: Excursion to Kufri"];
+                        break;
+                    case 3:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge", "Day 2: Excursion to Kufri", "Day 3: Visit Jakhu Temple and Tara Devi Temple"];
+                        break;
+                    case 4:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge", "Day 2: Excursion to Kufri", "Day 3: Visit Jakhu Temple and Tara Devi Temple", "Day 4: Day trip to Mashobra and Naldehra"];
+                        break;
+                    case 5:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge", "Day 2: Excursion to Kufri", "Day 3: Visit Jakhu Temple and Tara Devi Temple", "Day 4: Day trip to Mashobra and Naldehra", "Day 5: Explore Shimla on your own"];
+                        break;
+                    case 6:
+                        places = ["Day 1: Arrival in Shimla, visit Mall Road and Ridge", "Day 2: Excursion to Kufri", "Day 3: Visit Jakhu Temple and Tara Devi Temple", "Day 4: Day trip to Mashobra and Naldehra", "Day 5: Explore Shimla on your own", "Day 6: Departure from Shimla"];
+                        break;
+                }
+
+                var amount = calculateAmount(days);
+                displayPlaces(places, amount);
+            }
+        });
+
+        function calculateAmount(days) {
+            var amount = 0;
+            switch (days) {
+                case 1:
+                    amount = 3000;
+                    break;
+                case 2:
+                    amount = 5000;
+                    break;
+                case 3:
+                    amount = 8000;
+                    break;
+                case 4:
+                    amount = 10000;
+                    break;
+                case 5:
+                    amount = 12000;
+                    break;
+                case 6:
+                    amount = 15000;
+                    break;
+            }
+            return amount;
+        }
+
+        function displayPlaces(places, amount) {
+            var placesList = document.getElementById('placesList');
+            placesList.innerHTML = '';
+            places.forEach(function (place) {
+                var li = document.createElement('li');
+                li.textContent = place;
+                placesList.appendChild(li);
+            });
+
+            var totalAmount = document.getElementById('totalAmount');
+            totalAmount.textContent = "Total Amount: Rs " + amount;
+            document.getElementById('placesContainer').style.display = 'block';
+
+            var note = document.getElementById('note');
+            if (parseInt(document.getElementById('days').value) > 1) {
+                note.textContent = "Note: Guide, food, transport expenses included in the total amount.";
+            } else {
+                note.textContent = "Note: Only transport expenses will be provided in the total amount. If you need extra services, extra charges may apply.";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

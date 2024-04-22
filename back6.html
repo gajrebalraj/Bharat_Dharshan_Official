@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Details</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('image/slideimgs/img4.cms'); /* Add your background image URL here */
+    background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; /* Center the background image */
+}
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #placesContainer {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #placesList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #placesList li {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ladakh Tour</h1>
+    <form id="tourForm">
+        <label for="days">Number of Days:</label>
+        <select id="days" name="days">
+            <option value="2">2 Days</option>
+            <option value="3">3 Days</option>
+            <option value="4">4 Days</option>
+            <option value="5">5 Days</option>
+            <option value="6">6 Days</option>
+            <option value="7">7 Days</option>
+        </select>
+        <input type="submit" value="Check">
+    </form>
+
+    <div id="placesContainer">
+        <h2>Places to Visit</h2>
+        <ul id="placesList"></ul>
+        <div id="totalAmount"></div>
+        <p id="note"></p>
+        <button><a id="exploreLink" href="payment.php" class="btn" onclick="populatePackages()">Book Now</a></button><br><br><br>
+    </div>
+
+    <script>
+        document.getElementById('tourForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var days = parseInt(document.getElementById('days').value);
+            var places = [];
+
+            // Populate places based on the selected number of days
+            if (days >= 2 && days <= 7) {
+                switch (days) {
+                    case 2:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake"
+                        ];
+                        break;
+                    case 3:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake",
+                            "Day 3: Visit Hemis Monastery and Thiksey Monastery"
+                        ];
+                        break;
+                    case 4:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake",
+                            "Day 3: Visit Hemis Monastery and Thiksey Monastery",
+                            "Day 4: Explore Magnetic Hill and Gurudwara Pathar Sahib"
+                        ];
+                        break;
+                    case 5:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake",
+                            "Day 3: Visit Hemis Monastery and Thiksey Monastery",
+                            "Day 4: Explore Magnetic Hill and Gurudwara Pathar Sahib",
+                            "Day 5: Visit Alchi Monastery and Likir Monastery"
+                        ];
+                        break;
+                    case 6:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake",
+                            "Day 3: Visit Hemis Monastery and Thiksey Monastery",
+                            "Day 4: Explore Magnetic Hill and Gurudwara Pathar Sahib",
+                            "Day 5: Visit Alchi Monastery and Likir Monastery",
+                            "Day 6: Explore Nubra Valley and return to Leh"
+                        ];
+                        break;
+                    case 7:
+                        places = [
+                            "Day 1: Arrival in Leh, visit Mall Road and Ridge",
+                            "Day 2: Excursion to Khardung La Pass and Pangong Lake",
+                            "Day 3: Visit Hemis Monastery and Thiksey Monastery",
+                            "Day 4: Explore Magnetic Hill and Gurudwara Pathar Sahib",
+                            "Day 5: Visit Alchi Monastery and Likir Monastery",
+                            "Day 6: Explore Nubra Valley and return to Leh",
+                            "Day 7: Departure from Leh"
+                        ];
+                        break;
+                }
+
+                var amount = calculateAmount(days);
+                displayPlaces(places, amount);
+            }
+        });
+
+        function calculateAmount(days) {
+            switch (days) {
+                case 2:
+                    return 5000;
+                case 3:
+                    return 8000;
+                case 4:
+                    return 11000;
+                case 5:
+                    return 13000;
+                case 6:
+                    return 16000;
+                case 7:
+                    return 18000;
+                default:
+                    return 0;
+            }
+        }
+
+       
+        function displayPlaces(places, amount) {
+            var placesList = document.getElementById('placesList');
+            placesList.innerHTML = '';
+            places.forEach(function (place) {
+                var li = document.createElement('li');
+                li.textContent = place;
+                placesList.appendChild(li);
+            });
+
+            var totalAmount = document.getElementById('totalAmount');
+            totalAmount.textContent = "Total Amount: Rs " + amount;
+            document.getElementById('placesContainer').style.display = 'block';
+
+            var note = document.getElementById('note');
+            if (parseInt(document.getElementById('days').value) > 1) {
+                note.textContent = "Note: Guide, food, transport expenses included in the total amount.";
+            } else {
+                note.textContent = "Note: Only transport expenses will be provided in the total amount. If you need extra services, extra charges may apply.";
+            }
+        }   
+    </script>
+</body>
+
+</html>
